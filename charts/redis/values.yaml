@@ -51,6 +51,17 @@ replicaCount: 3
 ## For example: replicaCount: 6 and clusterReplicaCount: 1 creates 3 masters + 3 replicas (1 per master)
 clusterReplicaCount: 0
 
+cluster:
+  init:
+    ## @param cluster.init.resources Resource limits and requests for cluster init container
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 10m
+        memory: 32Mi
+
 ## @section Pod labels and annotations
 ## @param podLabels Map of labels to add to the pods
 podLabels: {}

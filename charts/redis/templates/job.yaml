@@ -35,10 +35,16 @@ spec:
                 secretKeyRef:
                   name: {{ include "redis.secretName" . }}
                   key: {{ include "redis.secretPasswordKey" . }}
-            {{- end }}
-            {{- with .Values.extraEnvVars }}
+          {{- end }}
+          {{- with .Values.extraEnvVars }}
 {{ toYaml . | indent 12 }}
-            {{- end }}
+          {{- end }}
+          {{- /* --- CHANGE START --- */}}
+          {{- if .Values.cluster.init.resources }}
+          resources:
+            {{- toYaml .Values.cluster.init.resources | nindent 12 }}
+          {{- end }}
+          {{- /* --- CHANGE END --- */}}
           command:
             - /bin/sh
             - -c

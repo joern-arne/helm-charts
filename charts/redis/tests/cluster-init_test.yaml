@@ -1,0 +1,49 @@
+suite: test redis cluster init job
+templates:
+  - templates/job.yaml  # Matches the filename from your error log
+tests:
+  - it: should use custom resource overrides when provided
+    set:
+      architecture: cluster
+      cluster:
+        init:
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.cpu
+          value: 200m
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.memory
+          value: 256Mi
+      - equal:
+          path: spec.template.spec.containers[0].resources.requests.cpu
+          value: 50m
+
+  - it: should use default resources from values.yaml if not overridden
+    set:
+      architecture: cluster
+      # We do NOT set 'cluster.init.resources' here.
+      # This relies on the defaults you added to your values.yaml file.
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources.limits.cpu
+          value: 100m  # Expecting the default we added earlier
+      - equal:
+          path: spec.template.spec.containers[0].resources.requests.memory
+          value: 32Mi  # Expecting the default we added earlier
+
+  - it: should not render resources block if explicitly disabled
+    set:
+      architecture: cluster
+      cluster:
+        init:
+          resources: null # We force this to null to test the {{- if }} logic
+    asserts:
+      - isNull:
+          path: spec.template.spec.containers[0].resources
