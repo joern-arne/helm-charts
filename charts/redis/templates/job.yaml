@@ -39,12 +39,10 @@ spec:
           {{- with .Values.extraEnvVars }}
 {{ toYaml . | indent 12 }}
           {{- end }}
-          {{- /* --- CHANGE START --- */}}
           {{- if .Values.cluster.init.resources }}
           resources:
             {{- toYaml .Values.cluster.init.resources | nindent 12 }}
           {{- end }}
-          {{- /* --- CHANGE END --- */}}
           command:
             - /bin/sh
             - -c
