@@ -205,11 +205,16 @@ cosign verify --key cosign.pub registry-1.docker.io/cloudpirates/redis:<version>
 
 ### Resource Management
 
-| Parameter                   | Description    | Default |
-| --------------------------- | -------------- | ------- |
-| `resources.limits.memory`   | Memory limit   | `256Mi` |
-| `resources.requests.cpu`    | CPU request    | `50m`   |
-| `resources.requests.memory` | Memory request | `128Mi` |
+| Parameter                                | Description    | Default |
+| ---------------------------              | -------------- | ------- |
+| `resources.limits.memory`                | Memory limit   | `256Mi` |
+| `resources.requests.cpu`                 | CPU request    | `50m`   |
+| `resources.requests.memory`              | Memory request | `128Mi` |
+| `cluster.init.resources.limits.cpu`      | CPU limit      | `100m`  |
+| `cluster.init.resources.limits.memory`   | Memory limit   | `128Mi` |
+| `cluster.init.resources.requests.cpu`    | CPU request    | `10m`   |
+| `cluster.init.resources.requests.memory` | Memory request | `32Mi`  |
+
 
 ### Pod Assignment / Eviction
 
